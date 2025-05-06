@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(LowerHouseVoteLog VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
 
@@ -46,8 +47,6 @@ target_link_libraries(appLowerHouseVoteLog
         Qt6::Quick
         SQLiteCpp
         sqlite3
-        pthread
-        dl
 )
 
 
