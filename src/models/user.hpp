@@ -10,7 +10,7 @@
 
 struct User {
     int id;
-    std::unique_ptr<std::string> name;
+    std::string name;
     std::string signature;
     int64_t create_time;
     int64_t update_time;

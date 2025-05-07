@@ -22,6 +22,9 @@ endif ()
 qt_add_executable(appLowerHouseVoteLog
         src/main.cpp
         src/models/user.hpp
+        src/services/sql_services.cpp
+        src/services/sql_services.hpp
+        src/models/record.hpp
 )
 
 qt_add_qml_module(appLowerHouseVoteLog
