@@ -4,6 +4,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "services/sql_services.hpp"
+#include "models/user.hpp"
 
 int main(int argc, char *argv[]) {
     const QGuiApplication app(argc, argv);
@@ -15,6 +16,10 @@ int main(int argc, char *argv[]) {
     qDebug() << "SqliteC++ version" << SQLITECPP_VERSION;
 
     SqlServices::get_instance().init();
+
+    for (const auto user_result = UserOperation::get_all_user().value_or({}); const auto &user : user_result) {
+        qDebug() << "user id: " << user.id << " name: " << user.name << " signature: " << user.signature;
+    }
 
     QQmlApplicationEngine engine;
     QObject::connect(

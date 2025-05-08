@@ -15,12 +15,12 @@ public:
 
     static SqlServices& get_instance();
     void init();
+    SQLite::Database& get_database();
 private:
     explicit SqlServices();
     ~SqlServices() = default;
 
     SQLite::Database database;
-    bool isInit = false;
 };
 
 

@@ -29,11 +29,14 @@ void SqlServices::init() {
             "start_time INTEGER NOT NULL,"
             "end_time INTEGER NOT NULL"
             ")");
-        isInit = true;
     }
     catch (const SQLite::Exception &e) {
         std::cerr << "SQLite exception: " << e.what() << std::endl;
     }
+}
+
+SQLite::Database & SqlServices::get_database() {
+    return database;
 }
 
 SqlServices::SqlServices()

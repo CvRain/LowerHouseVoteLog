@@ -27,6 +27,10 @@ qt_add_executable(appLowerHouseVoteLog
         src/models/record.hpp
 )
 
+target_include_directories(appLowerHouseVoteLog PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
 qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog
         VERSION 1.0
