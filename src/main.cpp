@@ -4,7 +4,7 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "services/sql_services.hpp"
-#include "models/user.hpp"
+#include "services/user_manager.hpp"
 
 int main(int argc, char *argv[]) {
     const QGuiApplication app(argc, argv);
@@ -17,9 +17,10 @@ int main(int argc, char *argv[]) {
 
     SqlServices::get_instance().init();
 
-    for (const auto user_result = UserOperation::get_all_user().value_or({}); const auto &user : user_result) {
-        qDebug() << "user id: " << user.id << " name: " << user.name << " signature: " << user.signature;
-    }
+    qmlRegisterSingletonType<UserManager>("UserManager", 1, 0, "UserManager",
+                                          [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
+                                              return UserManager::getInstance();
+                                          });
 
     QQmlApplicationEngine engine;
     QObject::connect(

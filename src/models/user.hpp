@@ -6,7 +6,6 @@
 #define USER_HPP
 
 #include <string>
-#include <memory>
 #include <optional>
 #include <SQLiteCpp/SQLiteCpp.h>
 

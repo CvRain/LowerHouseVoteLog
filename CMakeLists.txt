@@ -25,6 +25,8 @@ qt_add_executable(appLowerHouseVoteLog
         src/services/sql_services.cpp
         src/services/sql_services.hpp
         src/models/record.hpp
+        src/services/user_manager.cpp
+        src/services/user_manager.hpp
 )
 
 target_include_directories(appLowerHouseVoteLog PRIVATE
