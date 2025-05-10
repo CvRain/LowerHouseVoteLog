@@ -4,6 +4,7 @@ project(LowerHouseVoteLog VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
+set(QT_QML_GENERATE_QMLLS_INI ON)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
 
@@ -33,11 +34,14 @@ target_include_directories(appLowerHouseVoteLog PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
+set_source_files_properties(qml/ThemeManger.qml
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog
         VERSION 1.0
         QML_FILES
-        qml/Main.qml
+        qml/Main.qml qml/ThemeManger.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

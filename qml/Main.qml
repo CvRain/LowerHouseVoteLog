@@ -12,9 +12,22 @@ Window {
     Text {
         id: textText
         text: {
-            if(UserManager.checkUserExist()) return "has user";
+            if (UserManager.checkUserExist())
+                return "has user"
             return "no user"
         }
+
+        anchors.centerIn: parent
     }
 
+    Text {
+        text: UserManager.helloWorld()
+    }
+
+    Rectangle{
+        color: ThemeManger.currentTheme.background.backgroundPane
+        width: 200
+        height: 200
+        anchors.centerIn: parent
+    }
 }

@@ -7,7 +7,7 @@
 
 #include <QObject>
 
-#include "sql_services.hpp"
+#include "services/sql_services.hpp"
 
 class UserManager : public QObject {
     Q_OBJECT
@@ -15,7 +15,7 @@ class UserManager : public QObject {
 public:
     static UserManager* getInstance();
 
-    Q_INVOKABLE [[nodiscard]] bool checkUserExist() const;
+    [[nodiscard]] Q_INVOKABLE bool checkUserExist() const;
 
     Q_INVOKABLE static QString helloWorld();
 

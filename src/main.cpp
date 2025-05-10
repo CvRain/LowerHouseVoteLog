@@ -17,10 +17,7 @@ int main(int argc, char *argv[]) {
 
     SqlServices::get_instance().init();
 
-    qmlRegisterSingletonType<UserManager>("UserManager", 1, 0, "UserManager",
-                                          [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject* {
-                                              return UserManager::getInstance();
-                                          });
+    qmlRegisterSingletonInstance<UserManager>("UserManager",1,0, "UserManager", UserManager::getInstance());
 
     QQmlApplicationEngine engine;
     QObject::connect(

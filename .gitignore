@@ -1,8 +1,10 @@
 .vscode
 .idea
+.clj-kondo
 out
 build
 vcpkg_installed
 CMakeLists.txt.*
 CMakeLists.txt.user
 CMakeLists.txt.user.*
+cmake-*
