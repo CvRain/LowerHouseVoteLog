@@ -24,8 +24,8 @@ Window {
         text: UserManager.helloWorld()
     }
 
-    Rectangle{
-        color: ThemeManger.currentTheme.background.backgroundPane
+    Rectangle {
+        color: ThemeLatte.theme.background.backgroundPane
         width: 200
         height: 200
         anchors.centerIn: parent
