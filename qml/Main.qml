@@ -1,5 +1,6 @@
 import QtQuick
-import UserManager 1.0
+import QtQuick.Controls
+import LowerHouseVoteLog 1.0
 
 Window {
     id: mainWindow
@@ -10,24 +11,37 @@ Window {
     height: 740
 
     Text {
-        id: textText
-        text: {
-            if (UserManager.checkUserExist())
-                return "has user"
-            return "no user"
+        id: text
+        text: ThemeManager.currentThemeType
+        font.pixelSize: 32
+        color: ThemeManager.lavender
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 15
+    }
+
+    Button {
+        id: button
+
+        property int number: 0
+
+        text: button.number
+        font.pixelSize: 12
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: text.bottom
+        anchors.topMargin: 15
+
+        width: 150
+        height: 200
+
+        onClicked: {
+            console.debug(ThemeManager.currentThemeType)
+            ThemeManager.currentThemeType = ThemeManager.Mocha
+            button.number += 1
         }
 
-        anchors.centerIn: parent
-    }
-
-    Text {
-        text: UserManager.helloWorld()
-    }
-
-    Rectangle {
-        color: ThemeLatte.theme.background.backgroundPane
-        width: 200
-        height: 200
-        anchors.centerIn: parent
+        background: Rectangle {
+            color: ThemeManager.peach
+        }
     }
 }

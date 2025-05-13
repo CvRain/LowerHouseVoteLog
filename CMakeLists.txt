@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
+cmake_policy(SET CMP0071 NEW)
 
 project(LowerHouseVoteLog VERSION 0.1 LANGUAGES CXX)
 
@@ -28,28 +29,21 @@ qt_add_executable(appLowerHouseVoteLog
         src/models/record.hpp
         src/services/user_manager.cpp
         src/services/user_manager.hpp
-        src/models/palette.hpp
+        src/theme/palette.hpp
+        src/theme/theme_manager.cpp
+        src/theme/theme_manager.hpp
 )
 
 target_include_directories(appLowerHouseVoteLog PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/theme
 )
 
-set(QML_THEME_FILES
-    qml/theme/ThemeFrappe.qml
-    qml/theme/ThemeLatte.qml
-    qml/theme/ThemeMacchiato.qml
-    qml/theme/ThemeMocha.qml
-    qml/theme/ThemeManger.qml)
-
-set_source_files_properties(${QML_THEME_FILES}
-    PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog
         VERSION 1.0
-        QML_FILES
-        qml/Main.qml ${QML_THEME_FILES}
+        QML_FILES qml/Main.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

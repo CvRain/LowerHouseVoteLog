@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlEngine>
 #include <QDebug>
 #include <SQLiteCpp/SQLiteCpp.h>
 
@@ -17,7 +18,7 @@ int main(int argc, char *argv[]) {
 
     SqlServices::get_instance().init();
 
-    qmlRegisterSingletonInstance<UserManager>("UserManager",1,0, "UserManager", UserManager::getInstance());
+    qmlRegisterSingletonInstance<UserManager>("UserManager", 1, 0, "UserManager", UserManager::getInstance());
 
     QQmlApplicationEngine engine;
     QObject::connect(
