@@ -5,43 +5,87 @@ import LowerHouseVoteLog 1.0
 Window {
     id: mainWindow
 
-    title: qsTr("Hello World")
+    height: 740
+    title: qsTr("主题切换演示")
     visible: true
     width: 360
-    height: 740
 
+    // 背景色随主题变化
+    Rectangle {
+        anchors.fill: parent
+        color: ThemeManager.base
+
+        Behavior on color {
+
+            PropertyAnimation {
+                property: "color"
+                duration: 500
+                easing.type: Easing.InOutQuad
+            }
+        }
+    }
     Text {
-        id: text
-        text: ThemeManager.currentThemeType
-        font.pixelSize: 32
-        color: ThemeManager.lavender
+        id: themeText
+
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: 15
+        anchors.topMargin: 30
+        color: ThemeManager.text
+        font.pixelSize: 24
+        text: ThemeManager.currentThemeText
     }
+    Column {
+        anchors.centerIn: parent
+        spacing: 20
 
-    Button {
-        id: button
+        Repeater {
+            model: [{
+                    "text": "Latte",
+                    "theme": ThemeManager.Latte
+                }, {
+                    "text": "Frappe",
+                    "theme": ThemeManager.Frappe
+                }, {
+                    "text": "Macchiato",
+                    "theme": ThemeManager.Macchiato
+                }, {
+                    "text": "Mocha",
+                    "theme": ThemeManager.Mocha
+                }]
 
-        property int number: 0
+            delegate: Button {
+                height: 50
+                text: modelData.text
+                width: 200
 
-        text: button.number
-        font.pixelSize: 12
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: text.bottom
-        anchors.topMargin: 15
+                background: Rectangle {
+                    border.color: ThemeManager.overlay0
+                    border.width: 1
+                    color: ThemeManager.surface0
+                    radius: 8
 
-        width: 150
-        height: 200
+                    Behavior on color {
 
-        onClicked: {
-            console.debug(ThemeManager.currentThemeType)
-            ThemeManager.currentThemeType = ThemeManager.Mocha
-            button.number += 1
-        }
+                        PropertyAnimation {
+                            property: "color"
+                            duration: 450
+                            easing.type: Easing.OutInCubic
+                        }
+                    }
+                }
+                contentItem: Text {
+                    color: ThemeManager.text
+                    horizontalAlignment: Text.AlignHCenter
+                    text: parent.text
+                    verticalAlignment: Text.AlignVCenter
+                }
 
-        background: Rectangle {
-            color: ThemeManager.peach
+                onClicked: {
+
+                    ThemeManager.currentThemeType = modelData.theme
+                    //ThemeManager.changeTheme(modelData.theme)
+                }
+            }
         }
     }
 }

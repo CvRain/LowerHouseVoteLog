@@ -6,6 +6,7 @@ project(LowerHouseVoteLog VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
 set(QT_QML_GENERATE_QMLLS_INI ON)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
 
@@ -30,6 +31,7 @@ qt_add_executable(appLowerHouseVoteLog
         src/services/user_manager.cpp
         src/services/user_manager.hpp
         src/theme/palette.hpp
+        src/theme/palette.cpp
         src/theme/theme_manager.cpp
         src/theme/theme_manager.hpp
 )
