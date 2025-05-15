@@ -5,15 +5,15 @@ import LowerHouseVoteLog 1.0
 Window {
     id: mainWindow
 
-    height: 740
-    title: qsTr("主题切换演示")
+    height: 540
+    title: qsTr("Lower house vote log")
     visible: true
-    width: 360
+    width: 720
 
     // 背景色随主题变化
     Rectangle {
         anchors.fill: parent
-        color: PaletteManager.base
+        color: ThemeManager.backgroundPanel
 
         Behavior on color {
 
@@ -81,9 +81,7 @@ Window {
                 }
 
                 onClicked: {
-
-                    PaletteManager.currentThemeType = modelData.theme
-                    //ThemeManager.changeTheme(modelData.theme)
+                    ThemeManager.setTheme(modelData.theme)
                 }
             }
         }

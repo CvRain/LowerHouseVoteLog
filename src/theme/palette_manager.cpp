@@ -4,6 +4,8 @@
 
 #include "palette_manager.hpp"
 
+#include <iostream>
+
 PaletteManager *PaletteManager::instance = nullptr;
 
 PaletteManager *PaletteManager::getInstance() {
@@ -14,8 +16,8 @@ PaletteManager *PaletteManager::getInstance() {
 }
 
 PaletteManager *PaletteManager::create(const QQmlEngine *engine, const QJSEngine *scriptEngine) {
-    Q_UNUSED(engine)
-    Q_UNUSED(scriptEngine)
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
     return getInstance();
 }
 
@@ -25,7 +27,6 @@ void PaletteManager::setCurrentPalette(const ThemeType type) {
     if (type == currentThemeType) {
         return;
     }
-    qDebug() << "set new palette type: " << type;
     currentThemeType = type;
     updateCurrentTheme();
     emit paletteChanged();
@@ -34,15 +35,16 @@ void PaletteManager::setCurrentPalette(const ThemeType type) {
 PaletteManager::ThemeType PaletteManager::getCurrentPaletteType() const { return currentThemeType; }
 
 void PaletteManager::updateCurrentTheme() {
-    qDebug() << "palette changed update current theme";
+    qDebug() << "PaletteManager::updateCurrentTheme";
     currentPalette = &palettes.at(currentThemeType);
 }
 
 Palette *PaletteManager::getCurrentPalette() const { return currentPalette; }
 
 PaletteManager::PaletteManager(QObject *parent) : QObject(parent) {
-    //todo
-    //connect(this, &PaletteManager::paletteChanged, this, &PaletteManager::updateCurrentTheme);
+    // todo
+    // connect(this, &PaletteManager::paletteChanged, this, &PaletteManager::updateCurrentTheme);
+    connect(this, &PaletteManager::paletteChanged, this, &PaletteManager::paletteChangedMessage);
 
     this->palettes.insert(std::make_pair(ThemeType::Frappe, generateFrappePalette()));
     this->palettes.insert(std::make_pair(ThemeType::Latte, generateLattePalette()));
@@ -110,3 +112,8 @@ QColor PaletteManager::GetBase() const { return getCurrentPalette()->base; }
 QColor PaletteManager::GetMantle() const { return getCurrentPalette()->mantle; }
 
 QColor PaletteManager::GetCrust() const { return getCurrentPalette()->crust; }
+
+void PaletteManager::paletteChangedMessage() {
+    qDebug() << "PaletteManager::paletteChangedMessage:" << getCurrentPaletteText();
+    std::cout << "PaletteManager::paletteChangedMessage:" << getCurrentPaletteText().toStdString() << std::endl;
+}

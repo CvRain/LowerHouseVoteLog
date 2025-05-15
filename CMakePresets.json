@@ -7,15 +7,15 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe",
-        "CMAKE_PREFIX_PATH": "D:\\Project\\Qt\\6.9.0\\msvc2022_64"
-      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "C:\\msys64\\mingw64\\bin\\gcc.exe",
+        "CMAKE_CXX_COMPILER": "C:\\msys64\\mingw64\\bin\\g++.exe",
+        "CMAKE_PREFIX_PATH":"D:\\DevKit\\Qt\\6.8.1\\mingw_64"
       }
     },
     {

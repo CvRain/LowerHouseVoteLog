@@ -5,6 +5,7 @@
 #ifndef PALETTE_MANAGER_HPP
 #define PALETTE_MANAGER_HPP
 
+#include <QObject>
 #include <QQmlEngine>
 
 #include "theme/palette.hpp"
@@ -83,6 +84,9 @@ public:
     [[nodiscard]] QColor GetBase() const;
     [[nodiscard]] QColor GetMantle() const;
     [[nodiscard]] QColor GetCrust() const;
+
+public slots:
+    void paletteChangedMessage();
 
 signals:
     void paletteChanged();
