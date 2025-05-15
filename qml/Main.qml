@@ -13,7 +13,7 @@ Window {
     // 背景色随主题变化
     Rectangle {
         anchors.fill: parent
-        color: ThemeManager.base
+        color: PaletteManager.base
 
         Behavior on color {
 
@@ -30,9 +30,9 @@ Window {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: 30
-        color: ThemeManager.text
+        color: PaletteManager.text
         font.pixelSize: 24
-        text: ThemeManager.currentThemeText
+        text: PaletteManager.currentThemeText
     }
     Column {
         anchors.centerIn: parent
@@ -41,16 +41,16 @@ Window {
         Repeater {
             model: [{
                     "text": "Latte",
-                    "theme": ThemeManager.Latte
+                    "theme": PaletteManager.Latte
                 }, {
                     "text": "Frappe",
-                    "theme": ThemeManager.Frappe
+                    "theme": PaletteManager.Frappe
                 }, {
                     "text": "Macchiato",
-                    "theme": ThemeManager.Macchiato
+                    "theme": PaletteManager.Macchiato
                 }, {
                     "text": "Mocha",
-                    "theme": ThemeManager.Mocha
+                    "theme": PaletteManager.Mocha
                 }]
 
             delegate: Button {
@@ -59,9 +59,9 @@ Window {
                 width: 200
 
                 background: Rectangle {
-                    border.color: ThemeManager.overlay0
+                    border.color: PaletteManager.overlay0
                     border.width: 1
-                    color: ThemeManager.surface0
+                    color: PaletteManager.surface0
                     radius: 8
 
                     Behavior on color {
@@ -74,7 +74,7 @@ Window {
                     }
                 }
                 contentItem: Text {
-                    color: ThemeManager.text
+                    color: PaletteManager.text
                     horizontalAlignment: Text.AlignHCenter
                     text: parent.text
                     verticalAlignment: Text.AlignVCenter
@@ -82,7 +82,7 @@ Window {
 
                 onClicked: {
 
-                    ThemeManager.currentThemeType = modelData.theme
+                    PaletteManager.currentThemeType = modelData.theme
                     //ThemeManager.changeTheme(modelData.theme)
                 }
             }

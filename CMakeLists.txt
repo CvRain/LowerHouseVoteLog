@@ -34,6 +34,8 @@ qt_add_executable(appLowerHouseVoteLog
         src/theme/palette.cpp
         src/theme/theme_manager.cpp
         src/theme/theme_manager.hpp
+        src/theme/palette_manager.cpp
+        src/theme/palette_manager.hpp
 )
 
 target_include_directories(appLowerHouseVoteLog PRIVATE
