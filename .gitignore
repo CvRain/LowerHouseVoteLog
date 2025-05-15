@@ -1,6 +1,7 @@
 .vscode
 .idea
 .clj-kondo
+.vs
 out
 build
 vcpkg_installed
