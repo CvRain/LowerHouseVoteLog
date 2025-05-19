@@ -48,6 +48,7 @@ qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog
         VERSION 1.0
         QML_FILES qml/Main.qml qml/Sidebar.qml
+        RESOURCES resource.qrc
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
