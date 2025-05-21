@@ -25,4 +25,5 @@ Window {
         collapsedWidth: 70
         expandedWidth: 250
     }
+
 }

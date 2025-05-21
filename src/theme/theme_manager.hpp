@@ -13,9 +13,12 @@
 #include "palette_manager.hpp"
 
 class ThemeManager : public QObject {
-    Q_OBJECT
-    QML_ELEMENT
-    QML_SINGLETON
+    Q_OBJECT;
+    QML_SINGLETON;
+    QML_ELEMENT;
+    QML_NAMED_ELEMENT(ThemeManager);
+    QML_UNCREATABLE("ThemeManager is a singleton")
+
     Q_PROPERTY(QColor backgroundPanel READ getBackgroundPanel NOTIFY themeChanged)
     Q_PROPERTY(QColor secondaryPanel0 READ getSecondaryPanel0 NOTIFY themeChanged)
     Q_PROPERTY(QColor secondaryPanel1 READ getSecondaryPanel1 NOTIFY themeChanged)

@@ -12,8 +12,10 @@
 
 class PaletteManager : public QObject {
     Q_OBJECT
-    QML_ELEMENT
     QML_SINGLETON
+    QML_ELEMENT
+    QML_NAMED_ELEMENT(PaletteManager)
+    QML_UNCREATABLE("PaletteManager is a singleton")
 
     Q_PROPERTY(QColor rosewater READ GetRosewater NOTIFY paletteChanged)
     Q_PROPERTY(QColor flamingo READ GetFlamingo NOTIFY paletteChanged)

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import LowerHouseVoteLog 1.0
+import LowerHouseVoteLog
 
 Item {
     property bool expanded: false

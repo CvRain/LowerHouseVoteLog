@@ -49,6 +49,12 @@ qt_add_qml_module(appLowerHouseVoteLog
         VERSION 1.0
         QML_FILES qml/Main.qml qml/Sidebar.qml qml/ThemeMenu.qml qml/ThemeButtonComponent.qml
         RESOURCES resource.qrc
+        IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src
+        SOURCES
+        src/theme/theme_manager.cpp
+        src/theme/theme_manager.hpp
+        src/theme/palette_manager.cpp
+        src/theme/palette_manager.hpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

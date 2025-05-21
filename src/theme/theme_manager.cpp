@@ -5,6 +5,8 @@
 #include "theme_manager.hpp"
 
 #include <iostream>
+#include <QQmlEngine>
+#include <QJSEngine>
 
 #include "theme/palette_manager.hpp"
 
