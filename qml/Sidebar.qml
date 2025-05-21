@@ -6,6 +6,7 @@ Item {
     property bool expanded: false
     property color iconColor: ThemeManager.color0
     property color textColor: ThemeManager.color0
+    property int currentIndex: 0  // 添加当前页面索引属性
 
     property int expandedWidth: 200
     property int collapsedWidth: 60
@@ -38,19 +39,16 @@ Item {
         anchors.topMargin: 20
         spacing: 10
 
-        // 示例菜单项
+        // 菜单项
         Repeater {
             id: repeater
 
             model: [{
+                    "icon": "🗳️",
+                    "title": "Start Vote"
+                }, {
                     "icon": "📊",
-                    "title": "数据统计"
-                }, {
-                    "icon": "📝",
-                    "title": "投票记录"
-                }, {
-                    "icon": "⚙️",
-                    "title": "设置"
+                    "title": "Activity"
                 }]
 
             delegate: Item {
@@ -60,11 +58,13 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 5
-                    color: "transparent"
+                    color: sidebar.currentIndex === index ? ThemeManager.surfaceElement2 : "transparent"
                     radius: 8
 
                     Row {
-                        anchors.centerIn: parent
+                        anchors.left: parent.left
+                        anchors.leftMargin: 15
+                        anchors.verticalCenter: parent.verticalCenter
                         spacing: 10
 
                         Text {
@@ -103,6 +103,13 @@ Item {
                                     easing.type: Easing.InOutCubic
                                 }
                             }
+                        }
+                    }
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            sidebar.currentIndex = index
                         }
                     }
                 }
