@@ -3,17 +3,17 @@ import QtQuick.Controls
 import LowerHouseVoteLog 1.0
 
 Item {
-    id: sidebar
-    width: expanded ? expandedWidth : collapsedWidth
-    height: parent.height
-    anchors.left: parent.left
-
     property bool expanded: false
     property color iconColor: ThemeManager.color0
     property color textColor: ThemeManager.color0
 
     property int expandedWidth: 200
     property int collapsedWidth: 60
+
+    id: sidebar
+    width: expanded ? expandedWidth : collapsedWidth
+    height: parent.height
+    anchors.left: parent.left
 
     // 背景
     Rectangle {
@@ -40,6 +40,8 @@ Item {
 
         // 示例菜单项
         Repeater {
+            id: repeater
+
             model: [{
                     "icon": "📊",
                     "title": "数据统计"
@@ -85,13 +87,20 @@ Item {
                             font.pixelSize: 16
                             font.bold: true
                             anchors.verticalCenter: parent.verticalCenter
-                            opacity: expanded ? 1 : 0
-                            visible: expanded
+                            opacity: sidebar.expanded ? 1 : 0
+                            visible: sidebar.expanded
 
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 500
                                     easing.type: Easing.InOutQuad
+                                }
+                            }
+
+                            Behavior on opacity {
+                                NumberAnimation {
+                                    duration: 200
+                                    easing.type: Easing.InOutCubic
                                 }
                             }
                         }
@@ -112,7 +121,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.margins: 10
         z: 2
-        visible: expanded
+        visible: sidebar.expanded
 
         // 监听主题变化
         Connections {
@@ -159,6 +168,8 @@ Item {
 
     ThemeMenu {
         id: themeMenu
+        anchors.right: themeButton.right
+        anchors.bottom: themeButton.bottom
     }
 
     // 展开/收起按钮
@@ -189,7 +200,7 @@ Item {
 
         Text {
             anchors.centerIn: parent
-            text: expanded ? "◀" : "▶"
+            text: sidebar.expanded ? "◀" : "▶"
             color: ThemeManager.color0
             font.pixelSize: 16
 
@@ -205,7 +216,7 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             onClicked: {
-                expanded = !expanded
+                sidebar.expanded = !sidebar.expanded
             }
             onEntered: parent.color = ThemeManager.surfaceElement2
             onExited: parent.color = ThemeManager.surfaceElement1

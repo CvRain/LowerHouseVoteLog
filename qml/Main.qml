@@ -21,8 +21,8 @@ Window {
     color: ThemeManager.backgroundPanel
 
     Sidebar {
-       id: sidebar
-       collapsedWidth: 70
-       expandedWidth: 250 
+        id: sidebar
+        collapsedWidth: 70
+        expandedWidth: 250
     }
 }

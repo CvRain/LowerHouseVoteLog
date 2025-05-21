@@ -47,7 +47,7 @@ target_include_directories(appLowerHouseVoteLog PRIVATE
 qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog
         VERSION 1.0
-        QML_FILES qml/Main.qml qml/Sidebar.qml qml/ThemeMenu.qml
+        QML_FILES qml/Main.qml qml/Sidebar.qml qml/ThemeMenu.qml qml/ThemeButtonComponent.qml
         RESOURCES resource.qrc
 )
 
