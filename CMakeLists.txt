@@ -5,6 +5,9 @@ project(LowerHouseVoteLog VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
 set(QT_QML_GENERATE_QMLLS_INI ON)
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake)
 
@@ -36,6 +39,7 @@ qt_add_executable(appLowerHouseVoteLog
         src/theme/theme_manager.hpp
         src/theme/palette_manager.cpp
         src/theme/palette_manager.hpp
+        resource.qrc
 )
 
 target_include_directories(appLowerHouseVoteLog PRIVATE

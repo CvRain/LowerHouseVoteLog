@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import LowerHouseVoteLog 1.0
 
-Window {
+ApplicationWindow {
     id: mainWindow
 
     height: 540
@@ -22,11 +22,16 @@ Window {
 
     Sidebar {
         id: sidebar
+        anchors {
+            left: parent.left
+            top: parent.top
+            bottom: parent.bottom
+        }
         collapsedWidth: 70
         expandedWidth: 250
     }
 
-    // 主内容区域
+    //主内容区域
     StackView {
         id: stackView
         anchors {
@@ -97,7 +102,7 @@ Window {
             color: "transparent"
             Text {
                 anchors.centerIn: parent
-                text: "Activity Page"
+                text: "Activity Page hello!"
                 font.pixelSize: 24
                 color: ThemeManager.color0
             }
@@ -110,12 +115,12 @@ Window {
         function onCurrentIndexChanged() {
             if (sidebar.currentIndex === 0) {
                 if (stackView.depth > 1) {
-                    stackView.pop()
+                    stackView.pop();
                 } else {
-                    stackView.push(startVotePage)
+                    stackView.push(startVotePage);
                 }
             } else if (sidebar.currentIndex === 1) {
-                stackView.push(activityPage)
+                stackView.push(activityPage);
             }
         }
     }

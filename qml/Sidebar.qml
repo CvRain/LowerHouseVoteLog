@@ -3,15 +3,14 @@ import QtQuick.Controls
 import LowerHouseVoteLog
 
 Item {
+    id: sidebar
     property bool expanded: false
     property color iconColor: ThemeManager.color0
     property color textColor: ThemeManager.color0
-    property int currentIndex: 0  // 添加当前页面索引属性
+    property int currentIndex: 0 // 添加当前页面索引属性
 
     property int expandedWidth: 200
     property int collapsedWidth: 60
-
-    id: sidebar
     width: expanded ? expandedWidth : collapsedWidth
     height: parent.height
     anchors.left: parent.left
@@ -44,10 +43,10 @@ Item {
             id: repeater
 
             model: [{
-                    "icon": "🗳️",
+                    "icon": "qrc:/res/img/clock.svg",
                     "title": "Start Vote"
                 }, {
-                    "icon": "📊",
+                    "icon": "qrc:/res/img/calendar.svg",
                     "title": "Activity"
                 }]
 
@@ -58,7 +57,8 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 5
-                    color: sidebar.currentIndex === index ? ThemeManager.surfaceElement2 : "transparent"
+                    color: sidebar.currentIndex
+                           === index ? ThemeManager.surfaceElement2 : "transparent"
                     radius: 8
 
                     Row {
@@ -67,18 +67,16 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 10
 
-                        Text {
-                            text: modelData.icon
-                            font.pixelSize: 24
-                            color: ThemeManager.color0
+                        Image {
                             anchors.verticalCenter: parent.verticalCenter
-
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: 500
-                                    easing.type: Easing.InOutQuad
-                                }
-                            }
+                            source: modelData.icon
+                            fillMode: Image.PreserveAspectFit
+                            width: 30
+                            height: 30
+                            smooth: true
+                            mipmap: true
+                            antialiasing: true
+                            cache: false
                         }
 
                         Text {
@@ -145,18 +143,15 @@ Item {
             }
         }
 
-        Text {
+        Image {
             anchors.centerIn: parent
-            text: "🎨"
-            font.pixelSize: 20
-            color: ThemeManager.color0
-
-            Behavior on color {
-                ColorAnimation {
-                    duration: 500
-                    easing.type: Easing.InOutQuad
-                }
-            }
+            source: "qrc:/res/img/painting.svg"
+            fillMode: Image.PreserveAspectFit
+            width: parent.width * 0.6
+            height: parent.height * 0.6
+            smooth: true
+            mipmap: true
+            antialiasing: true
         }
 
         MouseArea {
@@ -205,16 +200,85 @@ Item {
             }
         }
 
-        Text {
+        Canvas {
+            id: arrowImage
             anchors.centerIn: parent
-            text: sidebar.expanded ? "◀" : "▶"
-            color: ThemeManager.color0
-            font.pixelSize: 16
+            width: 20
+            height: 20
 
-            Behavior on color {
-                ColorAnimation {
-                    duration: 500
+            property color arrowColor: ThemeManager.color0
+            property real rotationAngle: 0
+
+            // 添加旋转动画
+            Behavior on rotationAngle {
+                NumberAnimation {
+                    duration: 200
                     easing.type: Easing.InOutQuad
+                }
+            }
+
+            transform: Rotation {
+                origin.x: arrowImage.width / 2
+                origin.y: arrowImage.height / 2
+                angle: arrowImage.rotationAngle
+            }
+
+            onPaint: {
+                var ctx = getContext("2d")
+                ctx.reset()
+
+                // 设置箭头颜色
+                ctx.strokeStyle = arrowColor
+                ctx.lineWidth = 2
+                ctx.lineCap = "round"
+                ctx.lineJoin = "round"
+
+                // 计算箭头位置
+                var centerX = width / 2
+                var centerY = height / 2
+                var arrowLength = width * 0.4
+                var arrowWidth = width * 0.2
+
+                // 绘制箭头主体
+                ctx.beginPath()
+                ctx.moveTo(centerX - arrowLength / 2, centerY)
+                ctx.lineTo(centerX + arrowLength / 2, centerY)
+
+                // 绘制箭头头部
+                if (sidebar.expanded) {
+                    // 向左箭头
+                    ctx.lineTo(centerX + arrowLength / 2 - arrowWidth,
+                               centerY - arrowWidth)
+                    ctx.moveTo(centerX + arrowLength / 2, centerY)
+                    ctx.lineTo(centerX + arrowLength / 2 - arrowWidth,
+                               centerY + arrowWidth)
+                } else {
+                    // 向右箭头
+                    ctx.lineTo(centerX - arrowLength / 2 + arrowWidth,
+                               centerY - arrowWidth)
+                    ctx.moveTo(centerX - arrowLength / 2, centerY)
+                    ctx.lineTo(centerX - arrowLength / 2 + arrowWidth,
+                               centerY + arrowWidth)
+                }
+
+                ctx.stroke()
+            }
+
+            // 监听主题颜色变化
+            Connections {
+                target: ThemeManager
+                function onThemeChanged() {
+                    arrowImage.arrowColor = ThemeManager.color0
+                    arrowImage.requestPaint()
+                }
+            }
+
+            // 监听展开状态变化
+            Connections {
+                target: sidebar
+                function onExpandedChanged() {
+                    arrowImage.rotationAngle = sidebar.expanded ? 180 : 0
+                    arrowImage.requestPaint()
                 }
             }
         }

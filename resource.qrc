@@ -1,5 +1,13 @@
 <RCC>
     <qresource prefix="/">
-        <file>qml/ThemeButtonComponent.qml</file>
+        <file>res/img/arrow-left.svg</file>
+        <file>res/img/arrow-right.svg</file>
+        <file>res/img/calculator.svg</file>
+        <file>res/img/document holder.svg</file>
+        <file>res/img/notebook.svg</file>
+        <file>res/img/painting.svg</file>
+        <file>res/img/clock.svg</file>
+        <file>res/img/calendar.svg</file>
     </qresource>
+    <qresource prefix="/new/prefix1"/>
 </RCC>
