@@ -57,9 +57,25 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 5
-                    color: sidebar.currentIndex
-                           === index ? ThemeManager.surfaceElement2 : "transparent"
+                    color: {
+                        if (sidebar.currentIndex === index) {
+                            return ThemeManager.surfaceElement1
+                        } else if (isHovered) {
+                            return ThemeManager.surfaceElement0
+                        } else {
+                            return "transparent"
+                        }
+                    }
                     radius: 8
+
+                    // 添加鼠标悬浮效果
+                    property bool isHovered: false
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 200
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
 
                     Row {
                         anchors.left: parent.left
@@ -73,24 +89,44 @@ Item {
                             fillMode: Image.PreserveAspectFit
                             width: 30
                             height: 30
-                            smooth: true
-                            mipmap: true
-                            antialiasing: true
-                            cache: false
+                            opacity: sidebar.currentIndex === index ? 1.0 : 0.7
+                            Behavior on opacity {
+                                NumberAnimation {
+                                    duration: 200
+                                    easing.type: Easing.InOutQuad
+                                }
+                            }
                         }
 
                         Text {
                             text: modelData.title
-                            color: ThemeManager.color0
+                            color: {
+                                if (sidebar.currentIndex === index) {
+                                    return ThemeManager.cursorText
+                                }
+                                return Qt.darker(ThemeManager.cursorText)
+                            }
+
                             font.pixelSize: 16
-                            font.bold: true
                             anchors.verticalCenter: parent.verticalCenter
                             opacity: sidebar.expanded ? 1 : 0
                             visible: sidebar.expanded
+                            transform: Translate {
+                                x: sidebar.expanded ? 0 : -20
+                            }
+
+                            // 监听主题变化
+                            Connections {
+                                target: ThemeManager
+                                function onThemeChanged() {
+                                    parent.color = sidebar.currentIndex
+                                            === index ? ThemeManager.text : ThemeManager.subtext1
+                                }
+                            }
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 500
+                                    duration: 200
                                     easing.type: Easing.InOutQuad
                                 }
                             }
@@ -101,13 +137,27 @@ Item {
                                     easing.type: Easing.InOutCubic
                                 }
                             }
+
+                            Behavior on transform {
+                                NumberAnimation {
+                                    duration: 200
+                                    easing.type: Easing.OutCubic
+                                }
+                            }
                         }
                     }
 
                     MouseArea {
                         anchors.fill: parent
+                        hoverEnabled: true
                         onClicked: {
                             sidebar.currentIndex = index
+                        }
+                        onEntered: {
+                            parent.isHovered = true
+                        }
+                        onExited: {
+                            parent.isHovered = false
                         }
                     }
                 }
@@ -121,7 +171,7 @@ Item {
         width: 40
         height: 40
         radius: 20
-        color: ThemeManager.surfaceElement1
+        color: ThemeManager.surfaceElement0
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 10
@@ -132,13 +182,13 @@ Item {
         Connections {
             target: ThemeManager
             function onThemeChanged() {
-                themeButton.color = ThemeManager.surfaceElement1
+                themeButton.color = ThemeManager.surfaceElement0
             }
         }
 
         Behavior on color {
             ColorAnimation {
-                duration: 500
+                duration: 200
                 easing.type: Easing.InOutQuad
             }
         }
@@ -149,9 +199,7 @@ Item {
             fillMode: Image.PreserveAspectFit
             width: parent.width * 0.6
             height: parent.height * 0.6
-            smooth: true
-            mipmap: true
-            antialiasing: true
+            opacity: 0.7
         }
 
         MouseArea {
@@ -163,8 +211,8 @@ Item {
                     themeMenu.startAnimations()
                 }
             }
-            onEntered: parent.color = ThemeManager.surfaceElement2
-            onExited: parent.color = ThemeManager.surfaceElement1
+            onEntered: parent.color = ThemeManager.surfaceElement1
+            onExited: parent.color = ThemeManager.surfaceElement0
         }
     }
 
@@ -180,7 +228,7 @@ Item {
         width: 40
         height: 40
         radius: 20
-        color: ThemeManager.surfaceElement1
+        color: ThemeManager.surfaceElement0
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         anchors.margins: 10
@@ -189,13 +237,13 @@ Item {
         Connections {
             target: ThemeManager
             function onThemeChanged() {
-                toggleButton.color = ThemeManager.surfaceElement1
+                toggleButton.color = ThemeManager.surfaceElement0
             }
         }
 
         Behavior on color {
             ColorAnimation {
-                duration: 500
+                duration: 200
                 easing.type: Easing.InOutQuad
             }
         }
@@ -206,7 +254,7 @@ Item {
             width: 20
             height: 20
 
-            property color arrowColor: ThemeManager.color0
+            property color arrowColor: ThemeManager.subtext1
             property real rotationAngle: 0
 
             // 添加旋转动画
@@ -268,7 +316,7 @@ Item {
             Connections {
                 target: ThemeManager
                 function onThemeChanged() {
-                    arrowImage.arrowColor = ThemeManager.color0
+                    arrowImage.arrowColor = ThemeManager.subtext1
                     arrowImage.requestPaint()
                 }
             }
@@ -289,8 +337,8 @@ Item {
             onClicked: {
                 sidebar.expanded = !sidebar.expanded
             }
-            onEntered: parent.color = ThemeManager.surfaceElement2
-            onExited: parent.color = ThemeManager.surfaceElement1
+            onEntered: parent.color = ThemeManager.surfaceElement1
+            onExited: parent.color = ThemeManager.surfaceElement0
         }
     }
 
