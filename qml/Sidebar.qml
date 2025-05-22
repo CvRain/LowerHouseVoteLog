@@ -101,29 +101,20 @@ Item {
                         Text {
                             text: modelData.title
                             color: {
-                                if (sidebar.currentIndex === index) {
-                                    return ThemeManager.cursorText
+                                let isIndex = sidebar.currentIndex === index
+                                if (PaletteManager.currentThemeType == PaletteManager.Latte) {
+                                    return isIndex ? PaletteManager.rosewater : ThemeManager.subtle
                                 }
-                                return Qt.darker(ThemeManager.cursorText)
+                                return isIndex ? ThemeManager.color1 : ThemeManager.color8
                             }
 
-                            font.pixelSize: 16
                             anchors.verticalCenter: parent.verticalCenter
                             opacity: sidebar.expanded ? 1 : 0
                             visible: sidebar.expanded
+                            font.pixelSize: 16
                             transform: Translate {
                                 x: sidebar.expanded ? 0 : -20
                             }
-
-                            // 监听主题变化
-                            Connections {
-                                target: ThemeManager
-                                function onThemeChanged() {
-                                    parent.color = sidebar.currentIndex
-                                            === index ? ThemeManager.text : ThemeManager.subtext1
-                                }
-                            }
-
                             Behavior on color {
                                 ColorAnimation {
                                     duration: 200
@@ -316,7 +307,7 @@ Item {
             Connections {
                 target: ThemeManager
                 function onThemeChanged() {
-                    arrowImage.arrowColor = ThemeManager.subtext1
+                    arrowImage.arrowColor = PaletteManager.subtext0
                     arrowImage.requestPaint()
                 }
             }
