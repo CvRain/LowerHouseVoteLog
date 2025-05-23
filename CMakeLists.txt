@@ -47,7 +47,7 @@ target_include_directories(appLowerHouseVoteLog PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/theme
 )
 
-set(    QML_FILES
+set(QML_FILES
         qml/Main.qml
         qml/Sidebar.qml
         qml/ThemeMenu.qml
@@ -55,7 +55,11 @@ set(    QML_FILES
         qml/pages/StartVotePage.qml
         qml/pages/ActivityPage.qml
         qml/components/MenuItem.qml
+        qml/components/FontManager.qml
 )
+
+set_source_files_properties(qml/components/FontManager.qml
+        PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
 
 qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog

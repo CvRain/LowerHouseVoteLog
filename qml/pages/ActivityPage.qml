@@ -7,7 +7,8 @@ Rectangle {
     Text {
         anchors.centerIn: parent
         text: "Activity Page hello!"
-        font.pixelSize: 24
+        font.family: FontManager.hanYi.name
+        font.pixelSize: 36
         color: ThemeManager.color0
     }
 } 

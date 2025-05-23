@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import LowerHouseVoteLog 1.0
+import "./components"
+import "./pages"
 
 ApplicationWindow {
     id: mainWindow

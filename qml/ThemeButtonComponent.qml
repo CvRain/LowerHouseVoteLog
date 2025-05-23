@@ -27,7 +27,7 @@ Item {
             Text {
                 anchors.centerIn: parent
                 text: themeData.icon
-                font.pixelSize: 18
+                font.family: FontManager.caskaydiaCoveRegular.name
                 color: ThemeManager.color0
 
                 Behavior on color {

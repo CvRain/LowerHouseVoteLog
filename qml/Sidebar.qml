@@ -43,10 +43,10 @@ Item {
             id: repeater
             model: [{
                     "icon": "qrc:/res/img/clock.svg",
-                    "title": "Start Vote"
+                    "title": qsTr("今日议程")
                 }, {
                     "icon": "qrc:/res/img/calendar.svg",
-                    "title": "Activity"
+                    "title": qsTr("历史议程")
                 }]
 
             delegate: MenuItem {
@@ -150,7 +150,7 @@ Item {
             width: 20
             height: 20
 
-            property color arrowColor: PaletteManager.subtext1
+            property color arrowColor: PaletteManager.subtext0
             property real rotationAngle: 0
 
             onPaint: {

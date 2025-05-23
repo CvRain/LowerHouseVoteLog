@@ -56,9 +56,9 @@ Item {
             }
 
             Text {
-                text: title
+                text: menuItem.title
                 color: {
-                    let isIndex = isSelected
+                    let isIndex = menuItem.isSelected
                     if (PaletteManager.currentThemeType == PaletteManager.Latte) {
                         return isIndex ? PaletteManager.rosewater : ThemeManager.subtle
                     }
@@ -66,11 +66,12 @@ Item {
                 }
 
                 anchors.verticalCenter: parent.verticalCenter
-                opacity: isExpanded ? 1 : 0
-                visible: isExpanded
+                opacity: menuItem.isExpanded ? 1 : 0
+                visible: menuItem.isExpanded
+                font.family: FontManager.hanYi.name
                 font.pixelSize: 16
                 transform: Translate {
-                    x: isExpanded ? 0 : -20
+                    x: menuItem.isExpanded ? 0 : -20
                 }
                 Behavior on color {
                     ColorAnimation {
