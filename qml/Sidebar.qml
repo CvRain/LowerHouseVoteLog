@@ -41,7 +41,6 @@ Item {
         // 菜单项
         Repeater {
             id: repeater
-
             model: [{
                     "icon": "qrc:/res/img/clock.svg",
                     "title": "Start Vote"
@@ -50,107 +49,13 @@ Item {
                     "title": "Activity"
                 }]
 
-            delegate: Item {
-                width: parent.width
-                height: 50
-
-                Rectangle {
-                    anchors.fill: parent
-                    anchors.margins: 5
-                    color: {
-                        if (sidebar.currentIndex === index) {
-                            return ThemeManager.surfaceElement1
-                        } else if (isHovered) {
-                            return ThemeManager.surfaceElement0
-                        } else {
-                            return "transparent"
-                        }
-                    }
-                    radius: 8
-
-                    // 添加鼠标悬浮效果
-                    property bool isHovered: false
-                    Behavior on color {
-                        ColorAnimation {
-                            duration: 200
-                            easing.type: Easing.InOutQuad
-                        }
-                    }
-
-                    Row {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 15
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 10
-
-                        Image {
-                            anchors.verticalCenter: parent.verticalCenter
-                            source: modelData.icon
-                            fillMode: Image.PreserveAspectFit
-                            width: 30
-                            height: 30
-                            opacity: sidebar.currentIndex === index ? 1.0 : 0.7
-                            Behavior on opacity {
-                                NumberAnimation {
-                                    duration: 200
-                                    easing.type: Easing.InOutQuad
-                                }
-                            }
-                        }
-
-                        Text {
-                            text: modelData.title
-                            color: {
-                                let isIndex = sidebar.currentIndex === index
-                                if (PaletteManager.currentThemeType == PaletteManager.Latte) {
-                                    return isIndex ? PaletteManager.rosewater : ThemeManager.subtle
-                                }
-                                return isIndex ? ThemeManager.color1 : ThemeManager.color8
-                            }
-
-                            anchors.verticalCenter: parent.verticalCenter
-                            opacity: sidebar.expanded ? 1 : 0
-                            visible: sidebar.expanded
-                            font.pixelSize: 16
-                            transform: Translate {
-                                x: sidebar.expanded ? 0 : -20
-                            }
-                            Behavior on color {
-                                ColorAnimation {
-                                    duration: 200
-                                    easing.type: Easing.InOutQuad
-                                }
-                            }
-
-                            Behavior on opacity {
-                                NumberAnimation {
-                                    duration: 200
-                                    easing.type: Easing.InOutCubic
-                                }
-                            }
-
-                            Behavior on transform {
-                                NumberAnimation {
-                                    duration: 200
-                                    easing.type: Easing.OutCubic
-                                }
-                            }
-                        }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onClicked: {
-                            sidebar.currentIndex = index
-                        }
-                        onEntered: {
-                            parent.isHovered = true
-                        }
-                        onExited: {
-                            parent.isHovered = false
-                        }
-                    }
+            delegate: MenuItem {
+                iconSource: modelData.icon
+                title: modelData.title
+                isSelected: sidebar.currentIndex === index
+                isExpanded: sidebar.expanded
+                onClicked: {
+                    sidebar.currentIndex = index
                 }
             }
         }
@@ -245,10 +150,21 @@ Item {
             width: 20
             height: 20
 
-            property color arrowColor: ThemeManager.subtext1
+            property color arrowColor: PaletteManager.subtext1
             property real rotationAngle: 0
 
-            // 添加旋转动画
+            onPaint: {
+                var ctx = getContext("2d")
+                ctx.reset()
+                ctx.strokeStyle = arrowColor
+                ctx.lineWidth = 2
+                ctx.beginPath()
+                ctx.moveTo(0, 0)
+                ctx.lineTo(width, height / 2)
+                ctx.lineTo(0, height)
+                ctx.stroke()
+            }
+
             Behavior on rotationAngle {
                 NumberAnimation {
                     duration: 200
@@ -256,70 +172,7 @@ Item {
                 }
             }
 
-            transform: Rotation {
-                origin.x: arrowImage.width / 2
-                origin.y: arrowImage.height / 2
-                angle: arrowImage.rotationAngle
-            }
-
-            onPaint: {
-                var ctx = getContext("2d")
-                ctx.reset()
-
-                // 设置箭头颜色
-                ctx.strokeStyle = arrowColor
-                ctx.lineWidth = 2
-                ctx.lineCap = "round"
-                ctx.lineJoin = "round"
-
-                // 计算箭头位置
-                var centerX = width / 2
-                var centerY = height / 2
-                var arrowLength = width * 0.4
-                var arrowWidth = width * 0.2
-
-                // 绘制箭头主体
-                ctx.beginPath()
-                ctx.moveTo(centerX - arrowLength / 2, centerY)
-                ctx.lineTo(centerX + arrowLength / 2, centerY)
-
-                // 绘制箭头头部
-                if (sidebar.expanded) {
-                    // 向左箭头
-                    ctx.lineTo(centerX + arrowLength / 2 - arrowWidth,
-                               centerY - arrowWidth)
-                    ctx.moveTo(centerX + arrowLength / 2, centerY)
-                    ctx.lineTo(centerX + arrowLength / 2 - arrowWidth,
-                               centerY + arrowWidth)
-                } else {
-                    // 向右箭头
-                    ctx.lineTo(centerX - arrowLength / 2 + arrowWidth,
-                               centerY - arrowWidth)
-                    ctx.moveTo(centerX - arrowLength / 2, centerY)
-                    ctx.lineTo(centerX - arrowLength / 2 + arrowWidth,
-                               centerY + arrowWidth)
-                }
-
-                ctx.stroke()
-            }
-
-            // 监听主题颜色变化
-            Connections {
-                target: ThemeManager
-                function onThemeChanged() {
-                    arrowImage.arrowColor = PaletteManager.subtext0
-                    arrowImage.requestPaint()
-                }
-            }
-
-            // 监听展开状态变化
-            Connections {
-                target: sidebar
-                function onExpandedChanged() {
-                    arrowImage.rotationAngle = sidebar.expanded ? 180 : 0
-                    arrowImage.requestPaint()
-                }
-            }
+            rotation: sidebar.expanded ? 180 : 0
         }
 
         MouseArea {

@@ -84,29 +84,13 @@ ApplicationWindow {
     // Start Vote 页面
     Component {
         id: startVotePage
-        Rectangle {
-            color: "transparent"
-            Text {
-                anchors.centerIn: parent
-                text: "Start Vote Page"
-                font.pixelSize: 24
-                color: ThemeManager.color0
-            }
-        }
+        StartVotePage {}
     }
 
     // Activity 页面
     Component {
         id: activityPage
-        Rectangle {
-            color: "transparent"
-            Text {
-                anchors.centerIn: parent
-                text: "Activity Page hello!"
-                font.pixelSize: 24
-                color: ThemeManager.color0
-            }
-        }
+        ActivityPage {}
     }
 
     // 监听侧边栏页面切换

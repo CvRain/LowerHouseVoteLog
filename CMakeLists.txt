@@ -17,13 +17,13 @@ find_package(Qt6 REQUIRED COMPONENTS Quick Core)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
-if (QT_KNOWN_POLICY_QTP0004)
-    qt_policy(SET QTP0004 NEW)
-endif ()
+if(QT_KNOWN_POLICY_QTP0004)
+        qt_policy(SET QTP0004 NEW)
+endif()
 
-if (QT_KNOWN_POLICY_QTP0005)
-    qt_policy(SET QTP0005 NEW)
-endif ()
+if(QT_KNOWN_POLICY_QTP0005)
+        qt_policy(SET QTP0005 NEW)
+endif()
 
 qt_add_executable(appLowerHouseVoteLog
         src/main.cpp
@@ -47,11 +47,20 @@ target_include_directories(appLowerHouseVoteLog PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/theme
 )
 
+set(    QML_FILES
+        qml/Main.qml
+        qml/Sidebar.qml
+        qml/ThemeMenu.qml
+        qml/ThemeButtonComponent.qml
+        qml/pages/StartVotePage.qml
+        qml/pages/ActivityPage.qml
+        qml/components/MenuItem.qml
+)
 
 qt_add_qml_module(appLowerHouseVoteLog
         URI LowerHouseVoteLog
         VERSION 1.0
-        QML_FILES qml/Main.qml qml/Sidebar.qml qml/ThemeMenu.qml qml/ThemeButtonComponent.qml
+        QML_FILES ${QML_FILES}
         RESOURCES resource.qrc
         IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src
         SOURCES
