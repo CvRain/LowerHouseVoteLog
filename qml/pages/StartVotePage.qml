@@ -4,14 +4,15 @@ import QtQuick.Layouts
 import LowerHouseVoteLog
 
 Rectangle {
-    color: "transparent"
+    color: ThemeManager.secondaryPanel0
 
     // 主布局容器
     Rectangle {
         anchors.fill: parent
         anchors.margins: 20
-        color: ThemeManager.secondaryPanel0
+        color: ThemeManager.secondaryPanel1
         radius: 10
+
 
         ColumnLayout {
             anchors.fill: parent
@@ -21,7 +22,7 @@ Rectangle {
             // 会议状态显示
             Text {
                 id: meetingStatusText
-                text: "当前无进行中的会议"
+                text: qsTr("开启一场新的表决")
                 font.family: FontManager.hanYi.name
                 font.pixelSize: 28
                 color: ThemeManager.color0
@@ -67,23 +68,23 @@ Rectangle {
 
                 Button {
                     id: meetingControlButton
-                    text: "开始会议"
+                    text: qsTr("开始会议")
                     font.family: FontManager.hanYi.name
                     font.pixelSize: 18
                     Layout.preferredWidth: 120
                     Layout.preferredHeight: 40
 
                     onClicked: {
-                        if (text === "开始会议") {
-                            text = "结束会议"
-                            meetingStatusText.text = "会议进行中"
+                        if (text === qsTr("开始会议")) {
+                            text = qsTr("结束会议")
+                            meetingStatusText.text = qsTr("下议院再次攻占了上议院")
                             pauseButton.visible = true
                             cancelButton.visible = true
                             timer.start()
                             // TODO: 调用后端开始会议接口
                         } else {
-                            text = "开始会议"
-                            meetingStatusText.text = "当前无进行中的会议"
+                            text = qsTr("开始会议")
+                            meetingStatusText.text = qsTr("开启一场新的表决")
                             pauseButton.visible = false
                             cancelButton.visible = false
                             timer.stop()
