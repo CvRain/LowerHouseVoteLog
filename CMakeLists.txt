@@ -54,6 +54,7 @@ set(QML_FILES
         qml/ThemeButtonComponent.qml
         qml/pages/StartVotePage.qml
         qml/pages/ActivityPage.qml
+        qml/pages/UserPage.qml
         qml/components/MenuItem.qml
         qml/components/FontManager.qml
 )

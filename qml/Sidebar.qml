@@ -47,6 +47,9 @@ Item {
                 }, {
                     "icon": "qrc:/res/img/calendar.svg",
                     "title": qsTr("历史议程")
+                }, {
+                    "icon": "qrc:/res/img/user.svg",
+                    "title": qsTr("用户管理")
                 }]
 
             delegate: MenuItem {

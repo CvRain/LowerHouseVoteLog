@@ -95,6 +95,12 @@ ApplicationWindow {
         ActivityPage {}
     }
 
+    // User 页面
+    Component {
+        id: userPage
+        UserPage {}
+    }
+
     // 监听侧边栏页面切换
     Connections {
         target: sidebar
@@ -107,6 +113,8 @@ ApplicationWindow {
                 }
             } else if (sidebar.currentIndex === 1) {
                 stackView.push(activityPage);
+            } else if (sidebar.currentIndex === 2) {
+                stackView.push(userPage);
             }
         }
     }
