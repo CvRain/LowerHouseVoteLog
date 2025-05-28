@@ -81,6 +81,24 @@ ApplicationWindow {
                 easing.type: Easing.InCubic
             }
         }
+        replaceEnter: Transition {
+            PropertyAnimation {
+                property: "y"
+                from: stackView.height
+                to: 0
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+        replaceExit: Transition {
+            PropertyAnimation {
+                property: "y"
+                from: 0
+                to: -stackView.height
+                duration: 300
+                easing.type: Easing.InCubic
+            }
+        }
     }
 
     // Start Vote 页面
@@ -106,15 +124,11 @@ ApplicationWindow {
         target: sidebar
         function onCurrentIndexChanged() {
             if (sidebar.currentIndex === 0) {
-                if (stackView.depth > 1) {
-                    stackView.pop();
-                } else {
-                    stackView.push(startVotePage);
-                }
+                stackView.replace(startVotePage);
             } else if (sidebar.currentIndex === 1) {
-                stackView.push(activityPage);
+                stackView.replace(activityPage);
             } else if (sidebar.currentIndex === 2) {
-                stackView.push(userPage);
+                stackView.replace(userPage);
             }
         }
     }
