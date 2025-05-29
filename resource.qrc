@@ -17,5 +17,6 @@
         <file>res/fonts/CaskaydiaCoveNerdFont-LightItalic.ttf</file>
         <file>res/fonts/CaskaydiaCoveNerdFont-Regular.ttf</file>
         <file>res/fonts/HanYi.ttf</file>
+        <file>res/setting.toml</file>
     </qresource>
 </RCC>

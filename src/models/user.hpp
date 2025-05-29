@@ -7,6 +7,7 @@
 
 #include <string>
 #include <optional>
+#include <vector>
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "services/sql_services.hpp"

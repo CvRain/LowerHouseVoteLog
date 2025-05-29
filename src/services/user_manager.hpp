@@ -5,15 +5,19 @@
 #ifndef USER_MANAGER_HPP
 #define USER_MANAGER_HPP
 
-#include <QObject>
+#include <QQmlEngine>
 
 #include "services/sql_services.hpp"
 
 class UserManager : public QObject {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
+    QML_UNCREATABLE("UserManager is a singleton")
 
 public:
     static UserManager* getInstance();
+    static UserManager* create(const QQmlEngine *, const QJSEngine *);
 
     [[nodiscard]] Q_INVOKABLE bool checkUserExist() const;
 
@@ -23,6 +27,7 @@ private:
     explicit UserManager(QObject *parent = nullptr);
 
     SQLite::Database &db;
+    static UserManager *instance;
 };
 
 

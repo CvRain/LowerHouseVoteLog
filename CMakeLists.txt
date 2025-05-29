@@ -14,6 +14,9 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/third_party/SQLiteCpp)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick Core)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(tomlplusplus REQUIRED IMPORTED_TARGET tomlplusplus)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
@@ -25,7 +28,7 @@ if(QT_KNOWN_POLICY_QTP0005)
         qt_policy(SET QTP0005 NEW)
 endif()
 
-qt_add_executable(appLowerHouseVoteLog
+set(CPP_SOURCES
         src/main.cpp
         src/models/user.hpp
         src/services/sql_services.cpp
@@ -39,12 +42,19 @@ qt_add_executable(appLowerHouseVoteLog
         src/theme/theme_manager.hpp
         src/theme/palette_manager.cpp
         src/theme/palette_manager.hpp
+        src/services/setting_manager.cpp
+        src/services/setting_manager.hpp
+)
+
+qt_add_executable(appLowerHouseVoteLog
         resource.qrc
+        ${CPP_SOURCES}
 )
 
 target_include_directories(appLowerHouseVoteLog PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/src/theme
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/services
 )
 
 set(QML_FILES
@@ -68,11 +78,8 @@ qt_add_qml_module(appLowerHouseVoteLog
         QML_FILES ${QML_FILES}
         RESOURCES resource.qrc
         IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src
-        SOURCES
-        src/theme/theme_manager.cpp
-        src/theme/theme_manager.hpp
-        src/theme/palette_manager.cpp
-        src/theme/palette_manager.hpp
+        SOURCES ${CPP_SOURCES}
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -91,6 +98,7 @@ target_link_libraries(appLowerHouseVoteLog
         Qt6::Quick
         SQLiteCpp
         sqlite3
+        PkgConfig::tomlplusplus
 )
 
 

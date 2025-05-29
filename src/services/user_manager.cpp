@@ -4,24 +4,33 @@
 
 #include "user_manager.hpp"
 
-#include "services/sql_services.hpp"
 #include <QDebug>
 
-UserManager::UserManager(QObject *parent)
-: QObject(parent), db(SqlServices::get_instance().get_database()) {
+#include "services/sql_services.hpp"
+
+UserManager *UserManager::instance = nullptr;
+
+UserManager::UserManager(QObject *parent) : QObject(parent), db(SqlServices::get_instance().get_database()) {}
+
+UserManager *UserManager::getInstance() {
+    if (instance == nullptr) {
+        instance = new UserManager();
+    }
+    return instance;
 }
 
-UserManager * UserManager::getInstance() {
-    static UserManager instance;
-    return &instance;
+UserManager *UserManager::create(const QQmlEngine *engine, const QJSEngine *scriptEngine) {
+    Q_UNUSED(engine);
+    Q_UNUSED(scriptEngine);
+    return getInstance();
 }
 
 bool UserManager::checkUserExist() const {
     try {
-        auto query = SQLite::Statement(db, "SELECT * FROM user");
+        auto       query  = SQLite::Statement(db, "SELECT * FROM user");
         const auto result = query.executeStep();
 
-        qDebug() << (result ? "Found user" :"Not found user");
+        qDebug() << (result ? "Found user" : "Not found user");
 
         return result;
     }

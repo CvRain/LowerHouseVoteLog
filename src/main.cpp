@@ -5,9 +5,6 @@
 #include <SQLiteCpp/SQLiteCpp.h>
 
 #include "services/sql_services.hpp"
-#include "services/user_manager.hpp"
-#include "theme/theme_manager.hpp"
-#include "theme/palette_manager.hpp"
 
 int main(int argc, char *argv[]) {
     const QGuiApplication app(argc, argv);
@@ -20,10 +17,6 @@ int main(int argc, char *argv[]) {
 
     SqlServices::get_instance().init();
 
-    qmlRegisterSingletonInstance<UserManager>("UserManager", 1, 0, "UserManager", UserManager::getInstance());
-    qmlRegisterSingletonInstance<ThemeManager>("LowerHouseVoteLog", 1, 0, "ThemeManager", ThemeManager::getInstance());
-    qmlRegisterSingletonInstance<PaletteManager>("LowerHouseVoteLog", 1, 0, "PaletteManager", PaletteManager::getInstance());
-    qmlRegisterUncreatableType<QColor>("QtQml.Types", 1, 0, "QColor", "Built-in type");
     QQmlApplicationEngine engine;
     QObject::connect(
         &engine,
